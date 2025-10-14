@@ -1,0 +1,99 @@
+import { useState } from "react";
+
+const challenges = [
+  {
+    id: 1,
+    title: "☀️ Bersyukur Pagi Ini",
+    description: "Tulis 3 hal yang kamu syukuri hari ini.",
+    bg: "bg-blue-100",
+  },
+  {
+    id: 2,
+    title: "💬 Sapa Orang Lain",
+    description: "Ucapkan salam atau pujian tulus ke seseorang di sekitarmu.",
+    bg: "bg-white",
+  },
+  {
+    id: 3,
+    title: "🧘‍♀️ Latihan Tenang",
+    description: "Lakukan pernapasan dalam 3 menit untuk menenangkan pikiran.",
+    bg: "bg-green-100",
+  },
+];
+
+export default function ZonaTantangan() {
+  const [activeId, setActiveId] = useState(null);
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleSubmit = async (challenge) => {
+    setLoading(true);
+    setSuccessMsg("");
+    try {
+      const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/exec",
+        {
+          method: "POST",
+          mode: "no-cors",
+          body: JSON.stringify({
+            challenge: challenge.title,
+            answer: response,
+            timestamp: new Date().toISOString(),
+          }),
+        }
+      );
+      setResponse("");
+      setSuccessMsg("✅ Terkirim! Terima kasih atas refleksimu 🌱");
+    } catch (err) {
+      setSuccessMsg("❌ Gagal mengirim. Coba lagi.");
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="p-6">
+      <h2 className="text-3xl font-bold text-blue-700 flex items-center mb-2">
+        🎯 Zona Tantangan
+      </h2>
+      <p className="mb-6 text-gray-700">
+        Pilih tantangan resiliensi hari ini dan tulis refleksimu dengan semangat positif!
+      </p>
+
+      <div className="grid md:grid-cols-3 gap-4">
+        {challenges.map((ch) => (
+          <div
+            key={ch.id}
+            className={`${ch.bg} rounded-2xl p-5 shadow hover:shadow-lg cursor-pointer transition`}
+            onClick={() => setActiveId(activeId === ch.id ? null : ch.id)}
+          >
+            <h3 className="text-lg font-semibold mb-2">{ch.title}</h3>
+            <p className="text-gray-700 mb-2">{ch.description}</p>
+
+            {activeId === ch.id && (
+              <div className="mt-3">
+                <textarea
+                  className="w-full p-2 border rounded-lg"
+                  placeholder="Tuliskan refleksimu di sini..."
+                  value={response}
+                  onChange={(e) => setResponse(e.target.value)}
+                />
+                <button
+                  className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSubmit(ch);
+                  }}
+                  disabled={loading}
+                >
+                  {loading ? "Mengirim..." : "Kirim"}
+                </button>
+                {successMsg && <p className="text-sm mt-2 text-green-600">{successMsg}</p>}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
