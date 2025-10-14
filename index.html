@@ -21,13 +21,18 @@
       position: relative;
     }
 
-    header img {
-      width: 100px;
-      height: 100px;
+    /* Logo Sekolah di header */
+    header .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    header .logo img {
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      display: block;
-      margin: 0 auto 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     h1 {
@@ -71,8 +76,11 @@
 </head>
 <body>
   <header>
-    <!-- Tambahkan logo di atas judul -->
-    <img src="https://drive.google.com/uc?id=PASTE_ID_LOGO_DI_SINI" alt="logo-sman1tibawa.png">
+    <!-- Tambahan logo sekolah di pojok kiri atas -->
+    <div class="logo">
+      <img src="https://drive.google.com/uc?id=PASTE_ID_LOGO_DI_SINI" alt="Logo Sekolah">
+    </div>
+
     <h1>Strategi Pembelajaran Menumbuhkan Resiliensi</h1>
     <p>Media Pembelajaran Interaktif Berbasis Google Apps Script</p>
   </header>
@@ -105,7 +113,7 @@
   </main>
 
   <footer>
-    © 2025 SMA Anda – Program Pembelajaran Resiliensi
+    © 2025 SMAN 1 Tibawa – Program Pembelajaran Resiliensi
   </footer>
 
   <script>
