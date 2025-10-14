@@ -3,116 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resilience Learning Hub</title>
+  <title>Resilience Learning Hub • SMAN 1 Tibawa</title>
+  <!-- Tailwind via CDN (untuk versi sederhana) -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .hidden { display: none; }
+  </style>
 </head>
-<body class="bg-gradient-to-b from-blue-50 to-blue-100 min-h-screen font-sans">
+<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen font-sans">
 
-  <!-- Header -->
+  <!-- Header / Navbar -->
   <header class="bg-blue-700 text-white shadow-md">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">🌱 Resilience Learning Hub</h1>
+      <div class="flex items-center gap-3">
+        <img src="logo-sman1tibawa.png" alt="Logo SMAN 1 Tibawa" class="w-10 h-10 rounded-full shadow-md" />
+        <span class="text-xl font-semibold">Belajar Tangguh</span>
+      </div>
       <nav class="space-x-6">
-        <a href="#jurnal" class="hover:underline">Jurnal Diri</a>
-        <a href="#tantangan" class="hover:underline">Zona Tantangan</a>
-        <a href="#grafik" class="hover:underline">Perkembangan</a>
+        <a href="#" onclick="showPage('home')" class="hover:underline">Beranda</a>
+        <a href="#" onclick="showPage('jurnal')" class="hover:underline">Jurnal Diri</a>
+        <a href="#" onclick="showPage('tantangan')" class="hover:underline">Zona Tantangan</a>
+        <a href="#" onclick="showPage('profil')" class="hover:underline">Profil</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="text-center py-16 bg-gradient-to-r from-blue-600 to-teal-400 text-white">
-    <h2 class="text-4xl font-extrabold mb-4">Bangun Ketangguhan Diri Setiap Hari 💪</h2>
-    <p class="text-lg mb-6">Jadilah pribadi yang kuat, tangguh, dan mampu bangkit dari setiap tantangan hidup.</p>
-    <a href="#jurnal" class="bg-white text-blue-700 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-100">Mulai Sekarang</a>
-  </section>
+  <!-- Main container -->
+  <main class="container mx-auto px-6 py-8">
 
-  <!-- Jurnal Diri -->
-  <section id="jurnal" class="container mx-auto py-12 px-6">
-    <h3 class="text-3xl font-bold text-blue-700 mb-6">📝 Jurnal Diri</h3>
-    <p class="mb-4 text-gray-700">Tuliskan pengalaman dan perasaanmu hari ini. Menulis membantu memahami diri dan mengelola emosi dengan lebih baik.</p>
-    <textarea id="jurnalInput" class="w-full h-40 p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none" placeholder="Bagaimana perasaanmu hari ini?"></textarea>
-    <button onclick="simpanJurnal()" class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">Simpan Jurnal</button>
+    <!-- Page: Home -->
+    <section id="page-home">
+      <div class="text-center py-16">
+        <h1 class="text-4xl font-extrabold text-blue-700 mb-4">Bangun Ketangguhan Setiap Hari 💪</h1>
+        <p class="text-lg text-gray-700 mb-6">Portal pembelajaran karakter dan resiliensi siswa SMAN 1 Tibawa.</p>
+        <button onclick="showPage('jurnal')" class="bg-white text-blue-700 px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-100">
+          Mulai Jurnal
+        </button>
+      </div>
+    </section>
 
-    <div id="daftarJurnal" class="mt-8">
-      <h4 class="font-semibold text-lg text-gray-800 mb-2">📚 Jurnal Sebelumnya:</h4>
-      <ul id="jurnalList" class="list-disc list-inside text-gray-700"></ul>
-    </div>
-  </section>
+    <!-- Page: Jurnal Diri -->
+    <section id="page-jurnal" class="hidden">
+      <h2 class="text-3xl font-bold text-blue-700 mb-4">📝 Jurnal Diri</h2>
+      <p class="text-gray-700 mb-4">Isi jurnal harianmu — pengalaman, perasaan, pembelajaran.</p>
+      <input id="inputNama" class="border rounded-lg p-3 w-full mb-3" placeholder="Nama lengkap">
+      <input id="inputKelas" class="border rounded-lg p-3 w-full mb-6" placeholder="Kelas (misalnya XI IPA 1)">
+      <textarea id="inputJurnal" class="w-full h-36 p-4 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Tulis jurnal di sini..."></textarea>
+      <div class="mt-4 flex gap-3">
+        <button onclick="kirimJurnal()" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">Kirim ke Google Sheet</button>
+        <button onclick="showPage('home')" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg">Batal</button>
+      </div>
+      <p id="statusMsg" class="mt-4 text-sm text-green-600"></p>
+    </section>
 
-  <!-- Zona Tantangan -->
-  <section id="tantangan" class="bg-white py-12">
-    <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-bold text-blue-700 mb-6">🎯 Zona Tantangan</h3>
-      <p class="text-gray-700 mb-4">Pilih tantangan resiliensi hari ini dan coba lakukan dengan semangat positif!</p>
-
-      <div class="grid md:grid-cols-3 gap-6">
+    <!-- Page: Zona Tantangan -->
+    <section id="page-tantangan" class="hidden">
+      <h2 class="text-3xl font-bold text-blue-700 mb-4">🎯 Zona Tantangan</h2>
+      <p class="text-gray-700 mb-4">Pilih tantangan resiliensi harian dan jalankan.</p>
+      <div class="grid md:grid-cols-2 gap-6">
         <div class="p-6 bg-blue-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">🌤️ Bersyukur Pagi Ini</h4>
-          <p>Tulis 3 hal yang kamu syukuri hari ini.</p>
-        </div>
-        <div class="p-6 bg-teal-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">💬 Sapa Orang Lain</h4>
-          <p>Ucapkan salam atau pujian tulus ke seseorang di sekitarmu.</p>
+          <h4 class="text-lg font-semibold mb-1">Tantangan 1: Bersyukur</h4>
+          <p>Tuliskan 3 hal yang kamu syukuri hari ini.</p>
         </div>
         <div class="p-6 bg-green-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">🧘 Latihan Tenang</h4>
-          <p>Lakukan pernapasan dalam 3 menit untuk menenangkan pikiran.</p>
+          <h4 class="text-lg font-semibold mb-1">Tantangan 2: Tenang</h4>
+          <p>Tarik napas dalam 4 hitungan, tahan 4, keluarkan 6.</p>
+        </div>
+        <div class="p-6 bg-yellow-100 rounded-xl shadow hover:shadow-lg">
+          <h4 class="text-lg font-semibold mb-1">Tantangan 3: Motivasi Diri</h4>
+          <p>Katakana pada diri: “Saya bisa belajar dari kesalahan.”</p>
         </div>
       </div>
-    </div>
-  </section>
+      <button class="mt-6 bg-gray-200 text-gray-700 px-5 py-2 rounded-lg" onclick="showPage('home')">Kembali</button>
+    </section>
 
-  <!-- Grafik Perkembangan -->
-  <section id="grafik" class="container mx-auto py-12 px-6">
-    <h3 class="text-3xl font-bold text-blue-700 mb-6">📈 Grafik Perkembangan Emosi</h3>
-    <canvas id="emotionChart" class="bg-white rounded-xl p-4 shadow-lg"></canvas>
-  </section>
+    <!-- Page: Profil -->
+    <section id="page-profil" class="hidden">
+      <h2 class="text-3xl font-bold text-blue-700 mb-4">👤 Profil</h2>
+      <p class="text-gray-700 mb-4">SMAN 1 Tibawa — Portal Resiliensi & Karakter Tangguh</p>
+      <div class="text-gray-700 space-y-2">
+        <p>Nama Sekolah: SMAN 1 Tibawa</p>
+        <p>Visi: Menumbuhkan karakter tangguh bagi setiap siswa</p>
+        <p>Misi: Pembelajaran aktif, refleksi, dan layanan emosi</p>
+      </div>
+      <button class="mt-6 bg-gray-200 text-gray-700 px-5 py-2 rounded-lg" onclick="showPage('home')">Kembali</button>
+    </section>
+
+  </main>
 
   <!-- Footer -->
   <footer class="bg-blue-700 text-white text-center py-6">
-    <p>&copy; 2025 Resilience Learning Hub — Didesain untuk pembelajaran karakter tangguh siswa 🌿</p>
+    <p>&copy; 2025 SMAN 1 Tibawa • Belajar Tangguh</p>
   </footer>
 
   <script>
-    // Simpan jurnal di localStorage
-    function simpanJurnal() {
-      const input = document.getElementById('jurnalInput').value.trim();
-      if (!input) return alert('Tuliskan sesuatu terlebih dahulu 😊');
-      const jurnalList = JSON.parse(localStorage.getItem('jurnals')) || [];
-      jurnalList.push({ teks: input, tanggal: new Date().toLocaleString() });
-      localStorage.setItem('jurnals', JSON.stringify(jurnalList));
-      document.getElementById('jurnalInput').value = '';
-      tampilkanJurnal();
+    // Utility untuk pindah halaman
+    function showPage(pageId) {
+      const pages = ['page-home','page-jurnal','page-tantangan','page-profil'];
+      pages.forEach(pid => {
+        document.getElementById(pid).classList.add('hidden');
+      });
+      document.getElementById('page-' + pageId).classList.remove('hidden');
+      document.getElementById('statusMsg').textContent = '';
     }
 
-    function tampilkanJurnal() {
-      const jurnalList = JSON.parse(localStorage.getItem('jurnals')) || [];
-      const ul = document.getElementById('jurnalList');
-      ul.innerHTML = jurnalList.map(j => `<li>${j.tanggal}: ${j.teks}</li>`).join('');
+    // URL Google Apps Script Web App
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/dev";
+
+    async function kirimJurnal() {
+      const nama = document.getElementById('inputNama').value.trim();
+      const kelas = document.getElementById('inputKelas').value.trim();
+      const jurnal = document.getElementById('inputJurnal').value.trim();
+
+      if (!nama || !kelas || !jurnal) {
+        alert("Harap lengkapi nama, kelas, dan isi jurnal.");
+        return;
+      }
+
+      const payload = {
+        nama: nama,
+        kelas: kelas,
+        jurnal: jurnal
+      };
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify(payload),
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (res.ok) {
+          document.getElementById('statusMsg').textContent = "✅ Jurnal berhasil dikirim!";
+          document.getElementById('inputJurnal').value = '';
+        } else {
+          document.getElementById('statusMsg').textContent = "⚠️ Gagal mengirim jurnal.";
+        }
+      } catch (err) {
+        console.error("Error kirim:", err);
+        document.getElementById('statusMsg').textContent = "❌ Kesalahan jaringan.";
+      }
     }
 
-    tampilkanJurnal();
-
-    // Grafik dummy emosi
-    const ctx = document.getElementById('emotionChart');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
-        datasets: [{
-          label: 'Level Emosi Positif',
-          data: [3, 4, 2, 5, 4],
-          borderColor: 'rgb(37, 99, 235)',
-          fill: true,
-          backgroundColor: 'rgba(37, 99, 235, 0.2)',
-          tension: 0.3
-        }]
-      },
-      options: { scales: { y: { min: 0, max: 5 } } }
-    });
+    // Atur tampilan awal
+    showPage('home');
   </script>
-
 </body>
 </html>
