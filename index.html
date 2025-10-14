@@ -62,6 +62,41 @@
         </div>
       </div>
     </div>
+<script>
+  const scriptURL = "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/exec";
+
+  // Fungsi ketika user klik salah satu kartu tantangan
+  function pilihTantangan(nama, deskripsi) {
+    const catatan = prompt(`${nama}\n\n${deskripsi}\n\nTulis refleksi atau hasilmu di sini:`);
+
+    if (catatan) {
+      const data = new FormData();
+      data.append("tantangan", nama);
+      data.append("deskripsi", deskripsi);
+      data.append("refleksi", catatan);
+      data.append("waktu", new Date().toLocaleString("id-ID"));
+
+      fetch(scriptURL, { method: "POST", body: data })
+        .then(res => {
+          alert("✨ Tantangan berhasil disimpan! Lanjutkan semangatmu!");
+        })
+        .catch(err => {
+          alert("❌ Gagal menyimpan data. Periksa koneksi atau URL Apps Script.");
+          console.error(err);
+        });
+    }
+  }
+
+  // Tambahkan event listener untuk setiap kartu
+  document.querySelectorAll(".tantangan-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const nama = card.querySelector("h3").innerText;
+      const deskripsi = card.querySelector("p").innerText;
+      pilihTantangan(nama, deskripsi);
+    });
+  });
+</script>
+
   </section>
 
   <!-- Grafik Perkembangan -->
