@@ -56,26 +56,59 @@
       <p id="statusMsg" class="mt-4 text-sm text-green-600"></p>
     </section>
 
-    <!-- Page: Zona Tantangan -->
-    <section id="page-tantangan" class="hidden">
-      <h2 class="text-3xl font-bold text-blue-700 mb-4">🎯 Zona Tantangan</h2>
-      <p class="text-gray-700 mb-4">Pilih tantangan resiliensi harian dan jalankan.</p>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="p-6 bg-blue-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="text-lg font-semibold mb-1">Tantangan 1: Bersyukur</h4>
-          <p>Tuliskan 3 hal yang kamu syukuri hari ini.</p>
-        </div>
-        <div class="p-6 bg-green-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="text-lg font-semibold mb-1">Tantangan 2: Tenang</h4>
-          <p>Tarik napas dalam 4 hitungan, tahan 4, keluarkan 6.</p>
-        </div>
-        <div class="p-6 bg-yellow-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="text-lg font-semibold mb-1">Tantangan 3: Motivasi Diri</h4>
-          <p>Katakana pada diri: “Saya bisa belajar dari kesalahan.”</p>
-        </div>
+<!-- Zona Tantangan -->
+<section id="tantangan" class="bg-white py-12">
+  <div class="container mx-auto px-6">
+    <h3 class="text-3xl font-bold text-blue-700 mb-6">🎯 Zona Tantangan</h3>
+    <p class="text-gray-700 mb-8">
+      Pilih tantangan resiliensi hari ini dan coba lakukan dengan semangat positif!
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="p-6 bg-blue-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer transition transform hover:-translate-y-1">
+        <h3 class="font-semibold text-lg mb-2">🌤️ Bersyukur Pagi Ini</h3>
+        <p>Tulis 3 hal yang kamu syukuri hari ini.</p>
       </div>
-      <button class="mt-6 bg-gray-200 text-gray-700 px-5 py-2 rounded-lg" onclick="showPage('home')">Kembali</button>
-    </section>
+
+      <div class="p-6 bg-teal-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer transition transform hover:-translate-y-1">
+        <h3 class="font-semibold text-lg mb-2">💬 Sapa Orang Lain</h3>
+        <p>Ucapkan salam atau pujian tulus ke seseorang di sekitarmu.</p>
+      </div>
+
+      <div class="p-6 bg-green-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer transition transform hover:-translate-y-1">
+        <h3 class="font-semibold text-lg mb-2">🧘 Latihan Tenang</h3>
+        <p>Lakukan pernapasan dalam 3 menit untuk menenangkan pikiran.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/exec";
+
+    function pilihTantangan(nama, deskripsi) {
+      const catatan = prompt(`${nama}\n\n${deskripsi}\n\nTulis refleksi atau hasilmu di sini:`);
+      if (catatan) {
+        const data = new FormData();
+        data.append("tantangan", nama);
+        data.append("deskripsi", deskripsi);
+        data.append("refleksi", catatan);
+        data.append("waktu", new Date().toLocaleString("id-ID"));
+        fetch(scriptURL, { method: "POST", body: data })
+          .then(() => alert("✨ Tantangan berhasil disimpan! Lanjutkan semangatmu!"))
+          .catch(err => alert("❌ Gagal menyimpan data. Periksa koneksi atau URL Apps Script."));
+      }
+    }
+
+    document.querySelectorAll(".tantangan-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const nama = card.querySelector("h3").innerText;
+        const deskripsi = card.querySelector("p").innerText;
+        pilihTantangan(nama, deskripsi);
+      });
+    });
+  </script>
+</section>
+
 
     <!-- Page: Profil -->
     <section id="page-profil" class="hidden">
