@@ -1,153 +1,57 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resilience Learning Hub</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="bg-gradient-to-b from-blue-50 to-blue-100 min-h-screen font-sans">
+<!-- Zona Tantangan -->
+<section id="tantangan" class="bg-white py-12">
+  <div class="container mx-auto px-6">
+    <h3 class="text-3xl font-bold text-blue-700 mb-6">🎯 Zona Tantangan</h3>
+    <p class="text-gray-700 mb-4">
+      Pilih tantangan resiliensi hari ini dan coba lakukan dengan semangat positif!
+    </p>
 
-  <!-- Header -->
-  <header class="bg-blue-700 text-white shadow-md">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">🌱 Resilience Learning Hub</h1>
-      <nav class="space-x-6">
-        <a href="#jurnal" class="hover:underline">Jurnal Diri</a>
-        <a href="#tantangan" class="hover:underline">Zona Tantangan</a>
-        <a href="#grafik" class="hover:underline">Perkembangan</a>
-      </nav>
-    </div>
-  </header>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="p-6 bg-blue-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer">
+        <h3 class="font-semibold text-lg mb-2">🌤️ Bersyukur Pagi Ini</h3>
+        <p>Tulis 3 hal yang kamu syukuri hari ini.</p>
+      </div>
 
-  <!-- Hero Section -->
-  <section class="text-center py-16 bg-gradient-to-r from-blue-600 to-teal-400 text-white">
-    <h2 class="text-4xl font-extrabold mb-4">Bangun Ketangguhan Diri Setiap Hari 💪</h2>
-    <p class="text-lg mb-6">Jadilah pribadi yang kuat, tangguh, dan mampu bangkit dari setiap tantangan hidup.</p>
-    <a href="#jurnal" class="bg-white text-blue-700 px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-100">Mulai Sekarang</a>
-  </section>
+      <div class="p-6 bg-teal-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer">
+        <h3 class="font-semibold text-lg mb-2">💬 Sapa Orang Lain</h3>
+        <p>Ucapkan salam atau pujian tulus ke seseorang di sekitarmu.</p>
+      </div>
 
-  <!-- Jurnal Diri -->
-  <section id="jurnal" class="container mx-auto py-12 px-6">
-    <h3 class="text-3xl font-bold text-blue-700 mb-6">📝 Jurnal Diri</h3>
-    <p class="mb-4 text-gray-700">Tuliskan pengalaman dan perasaanmu hari ini. Menulis membantu memahami diri dan mengelola emosi dengan lebih baik.</p>
-    <textarea id="jurnalInput" class="w-full h-40 p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none" placeholder="Bagaimana perasaanmu hari ini?"></textarea>
-    <button onclick="simpanJurnal()" class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700">Simpan Jurnal</button>
-
-    <div id="daftarJurnal" class="mt-8">
-      <h4 class="font-semibold text-lg text-gray-800 mb-2">📚 Jurnal Sebelumnya:</h4>
-      <ul id="jurnalList" class="list-disc list-inside text-gray-700"></ul>
-    </div>
-  </section>
-
-  <!-- Zona Tantangan -->
-  <section id="tantangan" class="bg-white py-12">
-    <div class="container mx-auto px-6">
-      <h3 class="text-3xl font-bold text-blue-700 mb-6">🎯 Zona Tantangan</h3>
-      <p class="text-gray-700 mb-4">Pilih tantangan resiliensi hari ini dan coba lakukan dengan semangat positif!</p>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 bg-blue-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">🌤️ Bersyukur Pagi Ini</h4>
-          <p>Tulis 3 hal yang kamu syukuri hari ini.</p>
-        </div>
-        <div class="p-6 bg-teal-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">💬 Sapa Orang Lain</h4>
-          <p>Ucapkan salam atau pujian tulus ke seseorang di sekitarmu.</p>
-        </div>
-        <div class="p-6 bg-green-100 rounded-xl shadow hover:shadow-lg">
-          <h4 class="font-semibold text-lg mb-2">🧘 Latihan Tenang</h4>
-          <p>Lakukan pernapasan dalam 3 menit untuk menenangkan pikiran.</p>
-        </div>
+      <div class="p-6 bg-green-100 rounded-xl shadow hover:shadow-lg tantangan-card cursor-pointer">
+        <h3 class="font-semibold text-lg mb-2">🧘 Latihan Tenang</h3>
+        <p>Lakukan pernapasan dalam 3 menit untuk menenangkan pikiran.</p>
       </div>
     </div>
-<script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/exec";
-
-  // Fungsi ketika user klik salah satu kartu tantangan
-  function pilihTantangan(nama, deskripsi) {
-    const catatan = prompt(`${nama}\n\n${deskripsi}\n\nTulis refleksi atau hasilmu di sini:`);
-
-    if (catatan) {
-      const data = new FormData();
-      data.append("tantangan", nama);
-      data.append("deskripsi", deskripsi);
-      data.append("refleksi", catatan);
-      data.append("waktu", new Date().toLocaleString("id-ID"));
-
-      fetch(scriptURL, { method: "POST", body: data })
-        .then(res => {
-          alert("✨ Tantangan berhasil disimpan! Lanjutkan semangatmu!");
-        })
-        .catch(err => {
-          alert("❌ Gagal menyimpan data. Periksa koneksi atau URL Apps Script.");
-          console.error(err);
-        });
-    }
-  }
-
-  // Tambahkan event listener untuk setiap kartu
-  document.querySelectorAll(".tantangan-card").forEach(card => {
-    card.addEventListener("click", () => {
-      const nama = card.querySelector("h3").innerText;
-      const deskripsi = card.querySelector("p").innerText;
-      pilihTantangan(nama, deskripsi);
-    });
-  });
-</script>
-
-  </section>
-
-  <!-- Grafik Perkembangan -->
-  <section id="grafik" class="container mx-auto py-12 px-6">
-    <h3 class="text-3xl font-bold text-blue-700 mb-6">📈 Grafik Perkembangan Emosi</h3>
-    <canvas id="emotionChart" class="bg-white rounded-xl p-4 shadow-lg"></canvas>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-blue-700 text-white text-center py-6">
-    <p>&copy; 2025 Resilience Learning Hub — Didesain untuk pembelajaran karakter tangguh siswa 🌿</p>
-  </footer>
+  </div>
 
   <script>
-    // Simpan jurnal di localStorage
-    function simpanJurnal() {
-      const input = document.getElementById('jurnalInput').value.trim();
-      if (!input) return alert('Tuliskan sesuatu terlebih dahulu 😊');
-      const jurnalList = JSON.parse(localStorage.getItem('jurnals')) || [];
-      jurnalList.push({ teks: input, tanggal: new Date().toLocaleString() });
-      localStorage.setItem('jurnals', JSON.stringify(jurnalList));
-      document.getElementById('jurnalInput').value = '';
-      tampilkanJurnal();
+    const scriptURL = "https://script.google.com/macros/s/AKfycbww1A1TfcrXAvkKqetZZKWCWHRCrZK-VOwaowK0I5Y_/exec";
+
+    function pilihTantangan(nama, deskripsi) {
+      const catatan = prompt(`${nama}\n\n${deskripsi}\n\nTulis refleksi atau hasilmu di sini:`);
+
+      if (catatan) {
+        const data = new FormData();
+        data.append("tantangan", nama);
+        data.append("deskripsi", deskripsi);
+        data.append("refleksi", catatan);
+        data.append("waktu", new Date().toLocaleString("id-ID"));
+
+        fetch(scriptURL, { method: "POST", body: data })
+          .then(res => alert("✨ Tantangan berhasil disimpan! Lanjutkan semangatmu!"))
+          .catch(err => {
+            alert("❌ Gagal menyimpan data. Periksa koneksi atau URL Apps Script.");
+            console.error(err);
+          });
+      }
     }
 
-    function tampilkanJurnal() {
-      const jurnalList = JSON.parse(localStorage.getItem('jurnals')) || [];
-      const ul = document.getElementById('jurnalList');
-      ul.innerHTML = jurnalList.map(j => `<li>${j.tanggal}: ${j.teks}</li>`).join('');
-    }
-
-    tampilkanJurnal();
-
-    // Grafik dummy emosi
-    const ctx = document.getElementById('emotionChart');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
-        datasets: [{
-          label: 'Level Emosi Positif',
-          data: [3, 4, 2, 5, 4],
-          borderColor: 'rgb(37, 99, 235)',
-          fill: true,
-          backgroundColor: 'rgba(37, 99, 235, 0.2)',
-          tension: 0.3
-        }]
-      },
-      options: { scales: { y: { min: 0, max: 5 } } }
+    document.querySelectorAll(".tantangan-card").forEach(card => {
+      card.addEventListener("click", () => {
+        const nama = card.querySelector("h3").innerText;
+        const deskripsi = card.querySelector("p").innerText;
+        pilihTantangan(nama, deskripsi);
+      });
     });
   </script>
-
-</body>
-</html>
+</section>
